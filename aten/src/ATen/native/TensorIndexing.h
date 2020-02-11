@@ -252,13 +252,14 @@ static inline Tensor boolToIndexingTensor(const Tensor& self, bool value) {
     } else {
       return at::native::empty({0}, {}, self.options().dtype(kLong));
     }
-  } else {
-    if (value) {
-      return at::zeros({1}, {}, self.options().dtype(kLong));
-    } else {
-      return at::empty({0}, {}, self.options().dtype(kLong));
-    }
   }
+  // else {
+  //   if (value) {
+  //     return at::zeros({1}, {}, self.options().dtype(kLong));
+  //   } else {
+  //     return at::empty({0}, {}, self.options().dtype(kLong));
+  //   }
+  // }
 }
 
 static inline Tensor scalarToTensor(Scalar v, const TensorOptions& options) {
