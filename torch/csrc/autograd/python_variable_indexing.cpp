@@ -267,7 +267,7 @@ PyObject* THPVariable_getitem(PyObject* self, PyObject* index) {
     || PySlice_Check(index) \
     || index == Py_Ellipsis \
     || index == Py_None) {
-    return wrap(at::indexing::handleSimpleTypesInSingleDimIndexingGet(
+    return THPVariable_Wrap(at::indexing::handleSimpleTypesInSingleDimIndexingGet(
       self_,
       traceAndConvertPythonIndexToTensorIndex(self_, index, is_tracing),
       /*is_tracing=*/is_tracing));
@@ -283,11 +283,11 @@ PyObject* THPVariable_getitem(PyObject* self, PyObject* index) {
       // ensure we return a shallow copy for things like x[...]
       sliced = at::alias(sliced);
     }
-    return wrap(sliced);
+    return THPVariable_Wrap(sliced);
   }
 
   // indexing by tensors ("advanced" indexing)
-  return wrap(([&]() {
+  return THPVariable_Wrap(([&]() {
     pybind11::gil_scoped_release no_gil;
     return at::indexing::dispatch_index(sliced, variableIndices);
   })());
