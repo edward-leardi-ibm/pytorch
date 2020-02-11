@@ -249,15 +249,17 @@ static inline Tensor boolToIndexingTensor(const Tensor& self, bool value) {
   if (value) {
     if (device == at::kCPU || device == at::kCUDA) {
       return at::native::zeros({1}, {}, self.options().dtype(kLong));
-    } else {
-      return at::zeros({1}, {}, self.options().dtype(kLong));
     }
+    // else {
+    //   return at::zeros({1}, {}, self.options().dtype(kLong));
+    // }
   } else {
     if (device == at::kCPU || device == at::kCUDA) {
       return at::native::empty({0}, {}, self.options().dtype(kLong));
-    } else {
-      return at::empty({0}, {}, self.options().dtype(kLong));
     }
+    // else {
+    //   return at::empty({0}, {}, self.options().dtype(kLong));
+    // }
   }
 }
 
@@ -265,9 +267,10 @@ static inline Tensor scalarToTensor(Scalar v, const TensorOptions& options) {
   auto device = options.device();
   if (device == at::kCPU || device == at::kCUDA) {
     return at::native::scalar_tensor(v, options);
-  } else {
-    return at::scalar_tensor(v, options);
   }
+  // else {
+  //   return at::scalar_tensor(v, options);
+  // }
 }
 
 // To match numpy semantics:
